@@ -2,8 +2,8 @@
 description: Lista todos os comandos disponiveis ou detalha um comando especifico
 ---
 
-Execute o comando /help conforme definido na skill memoria-compartilhada
-(skills/memoria-compartilhada/SKILL.md), seção "/help".
+Execute o comando /ajuda conforme definido na skill memoria-compartilhada
+(skills/memoria-compartilhada/SKILL.md), seção "/ajuda".
 
 Sem argumento: liste todos os comandos agrupados por categoria (Acoes,
 Encerramento, Consulta, Remocao, Gestao dono, Gestao consumidor, Sistema),

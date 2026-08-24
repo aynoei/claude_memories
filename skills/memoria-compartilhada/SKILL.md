@@ -200,11 +200,37 @@ mesma sessao permanecem intactas.
 
 ---
 
-## /help
+## /diagnostico
+Health-check da instalacao do plugin — diferente do /relatorio (que mostra
+conteudo das memorias), este comando confirma se o plugin esta operacional.
+
+Executar cada checagem NA ORDEM abaixo e parar no primeiro item que falhar,
+informando a causa especifica e a correcao sugerida (nao seguir para os
+proximos itens se um anterior falhou):
+
+1. Conector Google Drive: testar com uma chamada leve (ex: acessar a pasta
+   pelo ID salvo). Se falhar: orientar reconexao em Configuracoes >
+   Conectores.
+2. Memoria ativa configurada: existe uma memoria definida como ativa? Se
+   nao houver nenhuma, orientar rodar /config-memoria (dono) ou
+   /conectar-memoria-compartilhada (consumidor).
+3. Acesso a pasta: o ID salvo na config ainda existe e e acessivel no
+   Drive? Se nao, a pasta pode ter sido movida, renomeada ou o acesso
+   revogado — orientar reconfigurar.
+4. Permissao: confirmar se e leitura ou leitura+escrita na memoria ativa.
+5. Arquivo de memoria legivel: tentar ler o conteudo e confirmar que o
+   formato das entradas esta correto (sem blocos corrompidos).
+6. Versao do plugin: comparar versao instalada com o VERSION do
+   repositorio (mesmo mecanismo do /verificar-atualizacao).
+
+Se todos os itens passarem, informar em formato de checklist (✓ para cada
+item) e concluir com "Plugin operacional."
+
+## /ajuda
 Sem argumento: lista resumida de todos os comandos agrupados por categoria
 (Acoes, Encerramento, Consulta, Remocao, Gestao dono, Gestao consumidor,
 Sistema), uma linha cada.
-Com argumento (/help <comando>): detalha aquele comando especifico,
+Com argumento (/ajuda <comando>): detalha aquele comando especifico,
 incluindo exemplo de uso.
 
 ## Limitacoes conhecidas (informar quando relevante, nao esconder)

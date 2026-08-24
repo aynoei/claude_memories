@@ -4,6 +4,9 @@ Plugin para registrar e consultar memorias de sessoes (avisos, apontamentos,
 debates, alteracoes, resumos) em pastas do Google Drive, com suporte a
 compartilhamento entre contas Claude.
 
+Novo por aqui? Veja o [Roteiro de Uso](./ROTEIRO-DE-USO.md) — explica o
+que o plugin faz e mostra um exemplo completo do começo ao fim.
+
 ## Requisitos
 - Conector Google Drive conectado na sua conta Claude
 
@@ -15,7 +18,7 @@ https://github.com/aynoei/claude_memories
 - Dono: rode `/config-memoria` para criar sua pasta de memorias
 - Consumidor: rode `/conectar-memoria-compartilhada` para vincular uma pasta
   compartilhada com voce
-- Rode `/help` a qualquer momento para ver todos os comandos
+- Rode `/ajuda` a qualquer momento para ver todos os comandos
 - Rode `/relatorio` para um diagnostico completo de todas as suas memorias
 
 ## Comportamento automatico
@@ -63,6 +66,7 @@ Atualizar exige reinstalar o plugin - nao e automatico.
 - `/listar-memoria-sessao [sessao]`
 - `/ler-memoria`
 - `/relatorio`
+- `/diagnostico`
 - `/verificar-atualizacao`
 
 ### Remocao (somente pelo autor original)
@@ -70,4 +74,4 @@ Atualizar exige reinstalar o plugin - nao e automatico.
 - `/remover-memoria-sessao [sessao]`
 
 ### Sistema
-- `/help [comando]`
+- `/ajuda [comando]`
