@@ -1,5 +1,12 @@
 # Roteiro de Uso — Claude Memories
 
+> **Antes de começar:** este plugin depende do conector Google Drive
+> expor ferramentas de conteúdo (criar, ler, buscar e escrever arquivo),
+> não apenas metadados (título, lixeira, compartilhamento). Rode
+> `/diagnostico` assim que instalar — se ele indicar que as ferramentas
+> de conteúdo não estão disponíveis, o plugin não vai funcionar por
+> completo até que uma integração com suporte completo esteja conectada.
+
 ## O que este plugin faz
 
 Você conversa bastante com o Claude sobre projetos, contratos, tarefas.

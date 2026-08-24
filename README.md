@@ -4,17 +4,34 @@ Plugin para registrar e consultar memorias de sessoes (avisos, apontamentos,
 debates, alteracoes, resumos) em pastas do Google Drive, com suporte a
 compartilhamento entre contas Claude.
 
-Novo por aqui? Veja o [Roteiro de Uso](./ROTEIRO-DE-USO.md) — explica o
+Novo por aqui? Rode `/roteiro` dentro do Claude (ou veja o
+[Roteiro de Uso](./ROTEIRO-DE-USO.md) aqui no repositorio) — explica o
 que o plugin faz e mostra um exemplo completo do começo ao fim.
 
 ## Requisitos
+
 - Conector Google Drive conectado na sua conta Claude
+- **Importante:** o conector precisa expor ferramentas de conteudo, nao
+  apenas de metadados. O plugin exige que o conector suporte:
+  - Criar arquivo/pasta
+  - Ler conteudo de arquivo
+  - Buscar/listar arquivos dentro de uma pasta
+  - Escrever/atualizar conteudo dentro de um arquivo (append)
+
+  Algumas integracoes de Google Drive expoem apenas acoes de metadados
+  (atualizar titulo/pasta, mover para lixeira, compartilhar com permissao).
+  Essas tres acoes **nao sao suficientes** — sem as quatro de conteudo
+  listadas acima, a maior parte dos comandos deste plugin nao funciona.
+
+  Rode `/diagnostico` logo apos instalar para confirmar se o seu conector
+  atende a esse requisito antes de configurar qualquer memoria.
 
 ## Instalacao
 Aponte a instalacao de plugin para este repositorio:
 https://github.com/aynoei/claude_memories
 
 ## Inicio rapido
+- Novo por aqui? Rode `/roteiro` para entender o plugin com um exemplo
 - Dono: rode `/config-memoria` para criar sua pasta de memorias
 - Consumidor: rode `/conectar-memoria-compartilhada` para vincular uma pasta
   compartilhada com voce
@@ -74,4 +91,5 @@ Atualizar exige reinstalar o plugin - nao e automatico.
 - `/remover-memoria-sessao [sessao]`
 
 ### Sistema
+- `/roteiro`
 - `/ajuda [comando]`

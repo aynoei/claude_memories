@@ -4,15 +4,48 @@
 Registrar, consultar e gerenciar entradas estruturadas de sessoes em pastas
 do Google Drive, com controle de acesso, autoria e vinculo por sessao.
 
+## Requisito de ferramentas do conector Google Drive
+Este plugin so funciona por completo se o conector Google Drive conectado
+expuser ferramentas de CRUD de conteudo, nao apenas de metadados. Integracoes
+minimas (algumas contas/versoes do conector Google Drive) expoem apenas:
+- Atualizar metadados de arquivo (titulo, pasta pai)
+- Mover arquivo para lixeira
+- Compartilhar arquivo com permissao (reader/commenter/writer)
+
+Essas tres acoes NAO SAO SUFICIENTES para o plugin funcionar. O plugin
+precisa, no minimo, que o conector disponibilize:
+- Criar arquivo/pasta
+- Ler conteudo de arquivo
+- Buscar/listar arquivos dentro de uma pasta
+- Escrever/atualizar conteudo dentro de um arquivo existente (append)
+
+Se o conector disponivel so tiver as tres acoes basicas (metadados, lixeira,
+compartilhamento), a maioria dos comandos deste plugin NAO PODE ser executada
+de verdade — apenas /gerenciar-acesso, /listar-acessos (parcialmente) e
+/remover-entrada (via trash) tem alguma chance de funcionar. Os comandos que
+criam ou leem conteudo (/apontamento, /debate, /aviso, /alteracao, /resumo,
+/ler-memoria, /listar-memorias, /relatorio, /config-memoria na parte de criar
+pasta, etc.) vao falhar.
+
 ## Pre-requisito de execucao (TODO comando que acessa o Drive)
-Antes de executar qualquer comando abaixo, verificar se o conector Google
-Drive esta disponivel e autorizado:
-- Tentar uma chamada leve (ex: acessar a pasta pelo ID salvo na config)
-- Se falhar: parar e informar -
-  "Nao consegui acessar o Google Drive. Verifique se o conector esta
-  conectado em Configuracoes > Conectores. Se ja estiver conectado, pode
-  ser necessario reautorizar o acesso."
-- Nao prosseguir ate a conexao ser confirmada
+Antes de executar qualquer comando abaixo:
+1. Verificar se o conector Google Drive esta disponivel e autorizado —
+   tentar uma chamada leve (ex: acessar a pasta pelo ID salvo na config)
+2. Verificar se as ferramentas necessarias para AQUELE comando especifico
+   estao disponiveis no conector (ex: criar arquivo, ler conteudo, listar
+   arquivos, escrever conteudo — conforme a lista acima)
+3. Se o conector nao estiver conectado: parar e informar -
+   "Nao consegui acessar o Google Drive. Verifique se o conector esta
+   conectado em Configuracoes > Conectores. Se ja estiver conectado, pode
+   ser necessario reautorizar o acesso."
+4. Se o conector estiver conectado mas SEM a ferramenta necessaria: parar e
+   informar -
+   "O conector Google Drive conectado nao expoe a ferramenta necessaria
+   para este comando (ex: criar/ler/escrever conteudo de arquivo). Isso e
+   uma limitacao da integracao disponivel, nao uma falha de configuracao.
+   Verifique se ha uma versao do conector Google Drive com suporte
+   completo a arquivos, ou use o Drive diretamente para esta acao."
+5. Nao prosseguir ate os dois pontos acima serem confirmados
 
 ## Formato de entrada
 ```
@@ -208,23 +241,47 @@ Executar cada checagem NA ORDEM abaixo e parar no primeiro item que falhar,
 informando a causa especifica e a correcao sugerida (nao seguir para os
 proximos itens se um anterior falhou):
 
-1. Conector Google Drive: testar com uma chamada leve (ex: acessar a pasta
-   pelo ID salvo). Se falhar: orientar reconexao em Configuracoes >
-   Conectores.
-2. Memoria ativa configurada: existe uma memoria definida como ativa? Se
+1. Conector Google Drive conectado: testar com uma chamada leve. Se falhar:
+   orientar reconexao em Configuracoes > Conectores.
+2. Ferramentas do conector disponiveis (CHECAGEM CRITICA): listar quais das
+   seguintes acoes o conector Google Drive conectado realmente expoe:
+   - Criar arquivo/pasta
+   - Ler conteudo de arquivo
+   - Buscar/listar arquivos dentro de uma pasta
+   - Escrever/atualizar conteudo dentro de um arquivo (append)
+   - Atualizar metadados (titulo, pasta pai)
+   - Mover para lixeira
+   - Compartilhar com permissao
+   Se as quatro primeiras (criar, ler, buscar, escrever conteudo) nao
+   estiverem disponiveis, PARAR aqui e informar claramente: "O conector
+   Google Drive conectado nao expoe as ferramentas de conteudo necessarias
+   (criar/ler/buscar/escrever arquivo). Isso e uma limitacao da integracao
+   disponivel — o plugin nao pode funcionar por completo nesta conta ate
+   que uma integracao com essas ferramentas esteja disponivel." Listar
+   explicitamente quais ferramentas FALTAM.
+3. Memoria ativa configurada: existe uma memoria definida como ativa? Se
    nao houver nenhuma, orientar rodar /config-memoria (dono) ou
    /conectar-memoria-compartilhada (consumidor).
-3. Acesso a pasta: o ID salvo na config ainda existe e e acessivel no
+4. Acesso a pasta: o ID salvo na config ainda existe e e acessivel no
    Drive? Se nao, a pasta pode ter sido movida, renomeada ou o acesso
    revogado — orientar reconfigurar.
-4. Permissao: confirmar se e leitura ou leitura+escrita na memoria ativa.
-5. Arquivo de memoria legivel: tentar ler o conteudo e confirmar que o
+5. Permissao: confirmar se e leitura ou leitura+escrita na memoria ativa.
+6. Arquivo de memoria legivel: tentar ler o conteudo e confirmar que o
    formato das entradas esta correto (sem blocos corrompidos).
-6. Versao do plugin: comparar versao instalada com o VERSION do
+7. Versao do plugin: comparar versao instalada com o VERSION do
    repositorio (mesmo mecanismo do /verificar-atualizacao).
 
 Se todos os itens passarem, informar em formato de checklist (✓ para cada
-item) e concluir com "Plugin operacional."
+item, incluindo a lista de ferramentas confirmadas no item 2) e concluir
+com "Plugin operacional."
+
+## /roteiro
+Exibe o conteudo completo do arquivo ROTEIRO-DE-USO.md diretamente na
+conversa (nao resumir/parafrasear). Util para quem acabou de instalar o
+plugin e nao sabe o que ele faz — explica o proposito, a diferenca entre
+os tipos de registro (aviso/apontamento/debate/alteracao/resumo) e mostra
+um exemplo de uso do começo ao fim. Se o arquivo nao estiver acessivel,
+informar e sugerir /ajuda como alternativa.
 
 ## /ajuda
 Sem argumento: lista resumida de todos os comandos agrupados por categoria
