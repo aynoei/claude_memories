@@ -1,0 +1,14 @@
+{
+  "name": "claude-memories-marketplace",
+  "owner": {
+    "name": "aynoei"
+  },
+  "description": "Marketplace pessoal com o plugin de memorias compartilhadas via Google Drive",
+  "plugins": [
+    {
+      "name": "claude-memories",
+      "source": "./",
+      "description": "Registro de acoes, pendencias e sessoes em pastas compartilhadas do Google Drive"
+    }
+  ]
+}
